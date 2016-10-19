@@ -1,0 +1,22 @@
+{
+    "name": "hiccup/freshdesk-api",
+    "description": "Freshdesk API v2 PHP bridge",
+    "type": "library",
+    "license": "Apache License",
+    "autoload": {
+        "psr-4": {
+            "Hiccup\\FreshdeskApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Budi Arsana",
+            "email": "budi.arsana@hiccup.com.au"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.1",
+        "jms/serializer": "~1",
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
