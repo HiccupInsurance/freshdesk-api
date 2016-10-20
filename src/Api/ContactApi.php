@@ -40,12 +40,12 @@ final class ContactApi extends BaseApi
     }
 
     /**
-     * @param ContactModel $contact
+     * @param ContactModel $model
      * @return ContactModel
      */
-    public function create(ContactModel $contact): ContactModel
+    public function create(ContactModel $model): ContactModel
     {
-        return $this->postRequest('contacts', $contact);
+        return $this->postRequest('contacts', $model);
     }
 
     /**
@@ -56,5 +56,15 @@ final class ContactApi extends BaseApi
     public function list(array $filters): array
     {
         return $this->getListRequest('/contacts', ContactModel::class, $filters);
+    }
+
+    /**
+     * @param integer $id
+     * @param ContactModel $model
+     * @return ContactModel
+     */
+    public function update($id, ContactModel $model): ContactModel
+    {
+        return $this->putRequest(sprintf('contacts/%d', $id), $model);
     }
 }

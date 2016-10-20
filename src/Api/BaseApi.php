@@ -133,4 +133,35 @@ abstract class BaseApi
 
         return $this->deserialize((string) $response->getBody(), sprintf('array<%s>', $className));
     }
+
+    /**
+     * @param string $path
+     * @param mixed $model
+     * @return mixed
+     */
+    protected function putRequest($path, $model)
+    {
+        $response = $this->client->put(
+            self::BASE_PATH.$path,
+            ['body' => $this->serializer->serialize($model, 'json')]
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            // throw exception here
+        }
+
+        return $this->deserialize((string) $response->getBody(), get_class($model));
+    }
+
+    /**
+     * @param string $path
+     */
+    protected function deleteRequest($path)
+    {
+        $response = $this->client->delete(self::BASE_PATH.$path);
+
+        if ($response->getStatusCode() !== 204) {
+            // throw exception here
+        }
+    }
 }
