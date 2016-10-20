@@ -4,7 +4,11 @@ namespace Hiccup\FreshdeskApi\Api;
 
 use Hiccup\FreshdeskApi\Model\ContactModel;
 
-class ContactApi extends BaseApi
+/**
+ * Class ContactApi
+ * @package Hiccup\FreshdeskApi\Api
+ */
+final class ContactApi extends BaseApi
 {
 
     #----------------------------------------------------------------------------------------------
@@ -30,14 +34,17 @@ class ContactApi extends BaseApi
      * @param integer $id
      * @return ContactModel
      */
-    public function getContact($id): ContactModel
+    public function get($id): ContactModel
     {
-        $response = $this->client->get(sprintf('/api/v2/contacts/%d', $id));
+        return $this->getRequest(sprintf('contacts/%d', $id), ContactModel::class);
+    }
 
-        if ($response->getStatusCode() !== 200) {
-            // throw exception here
-        }
-
-        return $this->deserialize((string) $response->getBody(), ContactModel::class);
+    /**
+     * @param ContactModel $contact
+     * @return ContactModel
+     */
+    public function create(ContactModel $contact)
+    {
+        return $this->postRequest('contacts', $contact);
     }
 }

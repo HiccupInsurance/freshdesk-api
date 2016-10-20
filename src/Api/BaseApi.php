@@ -6,22 +6,33 @@ use GuzzleHttp\Client;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 
-class BaseApi
+/**
+ * Class BaseApi
+ * @package Hiccup\FreshdeskApi\Api
+ * @TODO: need strategy to handle exception
+ */
+abstract class BaseApi
 {
 
     #----------------------------------------------------------------------------------------------
-    # Protected Properties
+    # Constants
+    #----------------------------------------------------------------------------------------------
+
+    const BASE_PATH = '/api/v2/';
+
+    #----------------------------------------------------------------------------------------------
+    # Private Properties
     #----------------------------------------------------------------------------------------------
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var SerializerInterface
      */
-    protected $serializer;
+    private $serializer;
 
     #----------------------------------------------------------------------------------------------
     # Magic methods
@@ -54,5 +65,44 @@ class BaseApi
     protected function deserialize($data, $className)
     {
         return $this->serializer->deserialize($data, $className, 'json');
+    }
+
+    /**
+     * Send GET request and return deserialized response
+     *
+     * @param string $path
+     * @param string $className
+     * @return mixed
+     */
+    protected function getRequest($path, $className)
+    {
+        $response = $this->client->get(self::BASE_PATH.$path);
+
+        if ($response->getStatusCode() !== 200) {
+            // throw exception here
+        }
+
+        return $this->deserialize((string) $response->getBody(), $className);
+    }
+
+    /**
+     * Send POST request and return deserialized response
+     *
+     * @param string $path
+     * @param mixed $model
+     * @return mixed
+     */
+    protected function postRequest($path, $model)
+    {
+        $response = $this->client->post(
+            self::BASE_PATH.$path,
+            ['body' => $this->serializer->serialize($model, 'json')]
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            // throw exception here
+        }
+
+        return $this->deserialize((string) $response->getBody(), get_class($model));
     }
 }
