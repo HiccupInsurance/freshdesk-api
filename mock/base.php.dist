@@ -1,0 +1,11 @@
+<?php
+
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
+require_once '../vendor/autoload.php';
+
+// bugs in standalone JMS serializer, read more at: http://stackoverflow.com/questions/14629137/jmsserializer-stand-alone-annotation-does-not-exist-or-cannot-be-auto-loaded
+AnnotationRegistry::registerLoader('class_exists');
+
+define('BASE_URL', 'your-freshdesk-base-url'); // e.g: https://xxxxxxx.freshdesk.com
+define('API_KEY', 'your-api-key'); // to find your api key, read https://support.freshdesk.com/support/solutions/articles/215517
