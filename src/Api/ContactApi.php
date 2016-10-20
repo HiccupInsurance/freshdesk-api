@@ -43,8 +43,18 @@ final class ContactApi extends BaseApi
      * @param ContactModel $contact
      * @return ContactModel
      */
-    public function create(ContactModel $contact)
+    public function create(ContactModel $contact): ContactModel
     {
         return $this->postRequest('contacts', $contact);
+    }
+
+    /**
+     * @param array $filters
+     * @return ContactModel[]
+     * @see http://developer.freshdesk.com/api/#list_all_contacts
+     */
+    public function list(array $filters): array
+    {
+        return $this->getListRequest('/contacts', ContactModel::class, $filters);
     }
 }

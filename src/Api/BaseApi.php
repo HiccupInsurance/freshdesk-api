@@ -105,4 +105,32 @@ abstract class BaseApi
 
         return $this->deserialize((string) $response->getBody(), get_class($model));
     }
+
+    /**
+     * @param string $path
+     * @param string $className
+     * @param array $filters
+     * @return array
+     */
+    protected function getListRequest($path, $className, array $filters): array
+    {
+        $queryParameters = [];
+
+        foreach($filters as $key => $filter) {
+            $queryParameters[] = sprintf('%s=%s', $key, urlencode($filter));
+        }
+
+        $response = $this->client->get(sprintf(
+            '%s%s?%s',
+            self::BASE_PATH,
+            $path,
+            implode('&', $queryParameters)
+        ));
+
+        if ($response->getStatusCode() !== 200) {
+            // throw exception here
+        }
+
+        return $this->deserialize((string) $response->getBody(), sprintf('array<%s>', $className));
+    }
 }
