@@ -67,4 +67,12 @@ final class ContactApi extends BaseApi
     {
         return $this->putRequest(sprintf('contacts/%d', $id), $model);
     }
+
+    /**
+     * @param integer $id
+     */
+    public function delete($id)
+    {
+        $this->deleteRequest(sprintf('contacts/%d', $id));
+    }
 }
