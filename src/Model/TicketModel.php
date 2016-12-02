@@ -29,6 +29,7 @@ class TicketModel
     const SOURCE_MOBIHELP = 8;
     const SOURCE_FEEDBACK_WIDGET = 9;
     const SOURCE_OUTBOUND_EMAIL = 10;
+    const SOURCE_ECOMMERCE = 11;
 
     const STATUS_OPEN = 2;
     const STATUS_PENDING = 3;
